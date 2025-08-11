@@ -7,3 +7,9 @@ data "alicloud_threat_detection_assets" "this" {
   ids            = var.assets.ids
   output_file    = var.assets.output_file
 }
+
+data "alicloud_threat_detection_honeypot_images" "this" {
+  ids         = var.honeypot_images.ids
+  name_regex  = var.honeypot_images.name_regex
+  output_file = var.honeypot_images.output_file
+}

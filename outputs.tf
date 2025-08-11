@@ -45,3 +45,52 @@ output "alicloud_threat_detection_client_file_protect" {
     }
   }
 }
+
+output "client_user_define_rule" {
+  value = {
+    for a in alicloud_threat_detection_client_user_define_rule.this : a => {
+      id          = a.id
+      create_time = a.create_time
+    }
+  }
+}
+
+output "file_upload_limit" {
+  value = {
+    for a in alicloud_threat_detection_file_upload_limit.this : a => {
+      id    = a.id
+      limit = a.limit
+    }
+  }
+}
+
+output "honeypot_node" {
+  value = {
+    for a in alicloud_threat_detection_honeypot_node.this : a => {
+      id          = a.id
+      create_time = a.create_time
+      status      = a.status
+    }
+  }
+}
+
+output "honey_pot" {
+  value = {
+    for a in alicloud_threat_detection_honey_pot.this : a => {
+      id          = a.id
+      honeypot_id = a.honeypot_id
+      preset_id   = a.preset_id
+      state       = a.state
+      status      = a.status
+    }
+  }
+}
+
+output "honeypot_preset" {
+  value = {
+    for a in alicloud_threat_detection_honeypot_preset.this : a => {
+      id                 = a.id
+      honeypot_preset_id = a.honeypot_preset_id
+    }
+  }
+}

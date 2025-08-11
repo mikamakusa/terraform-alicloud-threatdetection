@@ -52,3 +52,55 @@ resource "alicloud_threat_detection_client_file_protect" "this" {
   status      = each.value.status
   switch_id   = each.value.switch_id
 }
+
+resource "alicloud_threat_detection_client_user_define_rule" "this" {
+  for_each                     = { for rule in var.client_user_define_rule : rule.name => rule }
+  action_type                  = each.value.action_type
+  client_user_define_rule_name = each.value.name
+  platform                     = each.value.platform
+  type                         = each.value.type
+  cmdline                      = each.value.cmdline
+  file_path                    = each.value.file_path
+  hash                         = each.value.hash
+  ip                           = each.value.ip
+  new_file_path                = each.value.new_file_path
+  parent_cmdline               = each.value.parent_cmdline
+  parent_proc_path             = each.value.parent_proc_path
+  port_str                     = each.value.port_str
+  proc_path                    = each.value.proc_path
+  registry_content             = each.value.registry_content
+  registry_key                 = each.value.registry_key
+}
+
+resource "alicloud_threat_detection_file_upload_limit" "this" {
+  count = var.file_upload_limit ? 1 : 0
+  limit = var.file_upload_limit
+}
+
+resource "alicloud_threat_detection_honeypot_node" "this" {
+  for_each                       = { for node in var.honeypot_node : node.name => node }
+  available_probe_num            = each.value.available_probe_num
+  node_name                      = each.value.name
+  allow_honeypot_access_internet = each.value.allow_honeypot_access_internet
+}
+
+resource "alicloud_threat_detection_honey_pot" "this" {
+  for_each            = { for node in var.honeypot_node : node.name => node if contains(keys(node), "honeypot") && node.honeypot != null }
+  honeypot_image_id   = data.alicloud_threat_detection_honeypot_images.this.images.0.honeypot_image_id
+  honeypot_image_name = data.alicloud_threat_detection_honeypot_images.this.images.0.honeypot_image_name
+  honeypot_name       = lookup(each.value, "name")
+  node_id             = alicloud_threat_detection_honeypot_node.this[each.key].id
+}
+
+resource "alicloud_threat_detection_honeypot_preset" "this" {
+  for_each            = { for node in var.honeypot_node : node.name => node if contains(keys(node), "preset") && node.preset != null }
+  honeypot_image_name = data.alicloud_threat_detection_honeypot_images.this.images.0.honeypot_image_name
+  node_id             = alicloud_threat_detection_honeypot_node.this[each.key].id
+  preset_name         = lookup(each.value, "name")
+
+  meta {
+    burp            = lookup(each.value, "burp")
+    portrait_option = lookup(each.value, "portrait_option")
+    trojan_git      = lookup(each.value, "trojan_git")
+  }
+}

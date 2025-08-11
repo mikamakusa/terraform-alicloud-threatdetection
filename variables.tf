@@ -13,6 +13,16 @@ variable "assets" {
   description = "Datasource - fourni un outils de détection des menaces à l'utilisateur."
 }
 
+variable "honeypot_images" {
+  type = object({
+    ids         = optional(list(string))
+    name_regex  = optional(string)
+    output_file = optional(string)
+  })
+  default     = null
+  description = "Datasource - fourni un image pour les honeypot."
+}
+
 ## VARIABLES
 variable "anti_brute_force_rule" {
   type = list(object({
@@ -95,6 +105,65 @@ variable "client_file_protect" {
     alert_level = number
     status      = optional(number)
     switch_id   = optional(string)
+  }))
+  default = []
+}
+
+variable "client_user_define_rule" {
+  type = list(object({
+    action_type      = number
+    name             = string
+    platform         = string
+    type             = number
+    cmdline          = optional(string)
+    file_path        = optional(string)
+    hash             = optional(string)
+    ip               = optional(string)
+    new_file_path    = optional(string)
+    parent_cmdline   = optional(string)
+    parent_proc_path = optional(string)
+    port_str         = optional(string)
+    proc_path        = optional(string)
+    registry_content = optional(string)
+    registry_key     = optional(string)
+  }))
+  default = []
+
+  validation {
+    condition     = alltrue([for rule in var.client_user_define_rule : true if contains([0, 1], rule.action_type)])
+    error_message = "Valid values : 0 or 1."
+  }
+
+  validation {
+    condition     = alltrue([for rule in var.client_user_define_rule : true if contains(["windows", "linux", "all"], rule.platform)])
+    error_message = "Valid values : windows, linux or all."
+  }
+
+  validation {
+    condition     = alltrue([for rule in var.client_user_define_rule : true if contains([1, 2, 3, 4, 5, 6, 7], rule.type)])
+    error_message = "Valid values : 1, 2, 3, 4, 5, 6 or 7."
+  }
+}
+
+variable "file_upload_limit" {
+  type    = number
+  default = null
+}
+
+variable "honeypot_node" {
+  type = list(object({
+    available_probe_num            = number
+    name                           = string
+    allow_honeypot_access_internet = optional(bool)
+    honeypot = optional(list(object({
+      name = string
+    })))
+    preset = optional(list(object({
+      name            = string
+      burp            = string
+      portrait_option = optional(bool)
+      trojan_git      = optional(string)
+    })))
   }))
   default = []
 }

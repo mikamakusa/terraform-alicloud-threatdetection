@@ -24,7 +24,13 @@ No modules.
 | [alicloud_threat_detection_backup_policy.this](https://registry.terraform.io/providers/aliyun/alicloud/latest/docs/resources/threat_detection_backup_policy) | resource |
 | [alicloud_threat_detection_baseline_strategy.this](https://registry.terraform.io/providers/aliyun/alicloud/latest/docs/resources/threat_detection_baseline_strategy) | resource |
 | [alicloud_threat_detection_client_file_protect.this](https://registry.terraform.io/providers/aliyun/alicloud/latest/docs/resources/threat_detection_client_file_protect) | resource |
+| [alicloud_threat_detection_client_user_define_rule.this](https://registry.terraform.io/providers/aliyun/alicloud/latest/docs/resources/threat_detection_client_user_define_rule) | resource |
+| [alicloud_threat_detection_file_upload_limit.this](https://registry.terraform.io/providers/aliyun/alicloud/latest/docs/resources/threat_detection_file_upload_limit) | resource |
+| [alicloud_threat_detection_honey_pot.this](https://registry.terraform.io/providers/aliyun/alicloud/latest/docs/resources/threat_detection_honey_pot) | resource |
+| [alicloud_threat_detection_honeypot_node.this](https://registry.terraform.io/providers/aliyun/alicloud/latest/docs/resources/threat_detection_honeypot_node) | resource |
+| [alicloud_threat_detection_honeypot_preset.this](https://registry.terraform.io/providers/aliyun/alicloud/latest/docs/resources/threat_detection_honeypot_preset) | resource |
 | [alicloud_threat_detection_assets.this](https://registry.terraform.io/providers/aliyun/alicloud/latest/docs/data-sources/threat_detection_assets) | data source |
+| [alicloud_threat_detection_honeypot_images.this](https://registry.terraform.io/providers/aliyun/alicloud/latest/docs/data-sources/threat_detection_honeypot_images) | data source |
 
 ## Inputs
 
@@ -37,6 +43,10 @@ No modules.
 | <a name="input_backup_policy"></a> [backup\_policy](#input\_backup\_policy) | n/a | <pre>list(object({<br/>    name           = string<br/>    policy         = string<br/>    policy_version = string<br/>  }))</pre> | `[]` | no |
 | <a name="input_baseline_strategy"></a> [baseline\_strategy](#input\_baseline\_strategy) | n/a | <pre>list(object({<br/>    name               = string<br/>    custom_type        = string<br/>    cycle_days         = number<br/>    end_time           = string<br/>    risk_sub_type_name = string<br/>    start_time         = string<br/>    target_type        = string<br/>    cycle_start_time   = optional(number)<br/>  }))</pre> | `[]` | no |
 | <a name="input_client_file_protect"></a> [client\_file\_protect](#input\_client\_file\_protect) | n/a | <pre>list(object({<br/>    file_ops    = set(string)<br/>    file_paths  = set(string)<br/>    proc_paths  = set(string)<br/>    rule_action = string<br/>    name        = string<br/>    alert_level = number<br/>    status      = optional(number)<br/>    switch_id   = optional(string)<br/>  }))</pre> | `[]` | no |
+| <a name="input_client_user_define_rule"></a> [client\_user\_define\_rule](#input\_client\_user\_define\_rule) | n/a | <pre>list(object({<br/>    action_type      = number<br/>    name             = string<br/>    platform         = string<br/>    type             = number<br/>    cmdline          = optional(string)<br/>    file_path        = optional(string)<br/>    hash             = optional(string)<br/>    ip               = optional(string)<br/>    new_file_path    = optional(string)<br/>    parent_cmdline   = optional(string)<br/>    parent_proc_path = optional(string)<br/>    port_str         = optional(string)<br/>    proc_path        = optional(string)<br/>    registry_content = optional(string)<br/>    registry_key     = optional(string)<br/>  }))</pre> | `[]` | no |
+| <a name="input_file_upload_limit"></a> [file\_upload\_limit](#input\_file\_upload\_limit) | n/a | `number` | `null` | no |
+| <a name="input_honeypot_images"></a> [honeypot\_images](#input\_honeypot\_images) | Datasource - fourni un image pour les honeypot. | <pre>object({<br/>    ids         = optional(list(string))<br/>    name_regex  = optional(string)<br/>    output_file = optional(string)<br/>  })</pre> | `null` | no |
+| <a name="input_honeypot_node"></a> [honeypot\_node](#input\_honeypot\_node) | n/a | <pre>list(object({<br/>    available_probe_num            = number<br/>    name                           = string<br/>    allow_honeypot_access_internet = optional(bool)<br/>    honeypot = optional(list(object({<br/>      name = string<br/>    })))<br/>    preset = optional(list(object({<br/>      name            = string<br/>      burp            = string<br/>      portrait_option = optional(bool)<br/>      trojan_git      = optional(string)<br/>    })))<br/>  }))</pre> | `[]` | no |
 
 ## Outputs
 
@@ -48,3 +58,8 @@ No modules.
 | <a name="output_asset_bind"></a> [asset\_bind](#output\_asset\_bind) | n/a |
 | <a name="output_asset_selection_config"></a> [asset\_selection\_config](#output\_asset\_selection\_config) | n/a |
 | <a name="output_backup_policy"></a> [backup\_policy](#output\_backup\_policy) | n/a |
+| <a name="output_client_user_define_rule"></a> [client\_user\_define\_rule](#output\_client\_user\_define\_rule) | n/a |
+| <a name="output_file_upload_limit"></a> [file\_upload\_limit](#output\_file\_upload\_limit) | n/a |
+| <a name="output_honey_pot"></a> [honey\_pot](#output\_honey\_pot) | n/a |
+| <a name="output_honeypot_node"></a> [honeypot\_node](#output\_honeypot\_node) | n/a |
+| <a name="output_honeypot_preset"></a> [honeypot\_preset](#output\_honeypot\_preset) | n/a |
