@@ -94,3 +94,21 @@ output "honeypot_preset" {
     }
   }
 }
+
+output "image_event_operation" {
+  value = {
+    for a in alicloud_threat_detection_image_event_operation.this : a => {
+      id = a.id
+    }
+  }
+}
+
+output "instances" {
+  value = {
+    for a in alicloud_threat_detection_instance.this : a => {
+      id          = a.id
+      create_time = a.create_time
+      status      = a.status
+    }
+  }
+}

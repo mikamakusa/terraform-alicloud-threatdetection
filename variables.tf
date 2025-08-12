@@ -167,3 +167,90 @@ variable "honeypot_node" {
   }))
   default = []
 }
+
+variable "image_event_operation" {
+  type = list(object({
+    conditions     = string
+    event_key      = optional(string)
+    name           = optional(string)
+    event_type     = string
+    operation_code = string
+    scenarios      = optional(string)
+  }))
+  default = []
+}
+
+variable "instances" {
+  type = list(object({
+    payment_type                = string
+    version_code                = string
+    buy_number                  = optional(string)
+    container_image_scan_new    = optional(string)
+    honeypot                    = optional(string)
+    honeypot_switch             = optional(string)
+    modify_type                 = optional(string)
+    period                      = optional(number)
+    rasp_count                  = optional(string)
+    renew_period                = optional(number)
+    renewal_period_unit         = optional(string)
+    renewal_status              = optional(string)
+    sas_anti_ransomware         = optional(string)
+    sas_cspm                    = optional(string)
+    sas_cspm_switch             = optional(string)
+    sas_sc                      = optional(bool)
+    sas_sdk                     = optional(string)
+    sas_sdk_switch              = optional(string)
+    sas_sls_storage             = optional(string)
+    sas_webguard_boolean        = optional(string)
+    sas_webguard_order_num      = optional(string)
+    threat_analysis             = optional(string)
+    threat_analysis_flow        = optional(string)
+    threat_analysis_sls_storage = optional(string)
+    threat_analysis_switch      = optional(string)
+    threat_analysis_switch1     = optional(string)
+    v_core                      = optional(string)
+    vul_count                   = optional(string)
+    vul_switch                  = optional(string)
+  }))
+  default = []
+
+  validation {
+    condition     = alltrue([for instance in var.instances : true if contains(["level7", "level3", "level2", "level8", "level10"], instance.version_code)])
+    error_message = "Valid values : level7, level3, level2, level8, level10."
+  }
+
+  validation {
+    condition     = alltrue([for instance in var.instances : true if contains([1, 2], instance.honeypot_switch)])
+    error_message = "Valid values : 1 or 2."
+  }
+
+  validation {
+    condition     = alltrue([for instance in var.instances : true if contains(["Upgrade", "Downgrade"], instance.modify_type)])
+    error_message = "Valid values : Upgrade or Downgrade."
+  }
+
+  validation {
+    condition     = alltrue([for instance in var.instances : true if contains(["M", "Y"], instance.renewal_period_unit)])
+    error_message = "Valid values : M (for Month) or Y (for Years)."
+  }
+
+  validation {
+    condition     = alltrue([for instance in var.instances : true if contains(["AutoRenewal", "ManualRenewal"], instance.renewal_status)])
+    error_message = "Valid values : AutoRenewal or ManualRenewal."
+  }
+
+  validation {
+    condition     = alltrue([for instance in var.instances : true if instance.honeypot >= 20 && instance.honeypot <= 500])
+    error_message = "Valid values is between 20 & 500."
+  }
+
+  validation {
+    condition     = alltrue([for instance in var.instances : true if instance.container_image_scan_new >= 0 && instance.container_image_scan_new <= 200000])
+    error_message = "Valid values is between 0 & 200000."
+  }
+
+  validation {
+    condition     = alltrue([for instance in var.instances : true if instance.rasp_count >= 1 && instance.rasp_count <= 100000000])
+    error_message = "Valid values is between 1 & 100000000."
+  }
+}

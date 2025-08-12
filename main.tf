@@ -104,3 +104,46 @@ resource "alicloud_threat_detection_honeypot_preset" "this" {
     trojan_git      = lookup(each.value, "trojan_git")
   }
 }
+
+resource "alicloud_threat_detection_image_event_operation" "this" {
+  for_each       = { for event in var.image_event_operation : event.name => event }
+  conditions     = each.value.conditions
+  event_key      = each.value.event_key
+  event_name     = each.value.name
+  event_type     = each.value.event_type
+  operation_code = each.value.operation_code
+  scenarios      = each.value.scenarios
+}
+
+resource "alicloud_threat_detection_instance" "this" {
+  for_each                    = { for instance in var.instances : instance.payment_type => instance }
+  payment_type                = each.value.payment_type
+  version_code                = each.value.version_code
+  buy_number                  = each.value.buy_number
+  container_image_scan_new    = each.value.container_image_scan_new
+  honeypot                    = each.value.honeypot
+  honeypot_switch             = each.value.honeypot_switch
+  modify_type                 = each.value.modify_type
+  period                      = each.value.period
+  rasp_count                  = each.value.rasp_count
+  renew_period                = each.value.renew_period
+  renewal_period_unit         = each.value.renewal_period_unit
+  renewal_status              = each.value.renewal_status
+  sas_anti_ransomware         = each.value.sas_anti_ransomware
+  sas_cspm                    = each.value.sas_cspm
+  sas_cspm_switch             = each.value.sas_cspm_switch
+  sas_sc                      = each.value.sas_sc
+  sas_sdk                     = each.value.sas_sdk
+  sas_sdk_switch              = each.value.sas_sdk_switch
+  sas_sls_storage             = each.value.sas_sls_storage
+  sas_webguard_boolean        = each.value.sas_webguard_boolean
+  sas_webguard_order_num      = each.value.sas_webguard_order_num
+  threat_analysis             = each.value.threat_analysis
+  threat_analysis_flow        = each.value.threat_analysis_flow
+  threat_analysis_sls_storage = each.value.threat_analysis_sls_storage
+  threat_analysis_switch      = each.value.threat_analysis_switch
+  threat_analysis_switch1     = each.value.threat_analysis_switch1
+  v_core                      = each.value.v_core
+  vul_count                   = each.value.vul_count
+  vul_switch                  = each.value.vul_switch
+}
