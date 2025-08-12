@@ -147,3 +147,37 @@ resource "alicloud_threat_detection_instance" "this" {
   vul_count                   = each.value.vul_count
   vul_switch                  = each.value.vul_switch
 }
+
+/*resource "threat_detection_log_meta" "this" {
+  count         = var.log_meta ? 1 : 0
+  status        = var.log_meta.status
+  log_meta_name = var.log_meta.log_meta_name
+}*/
+
+resource "alicloud_threat_detection_malicious_file_whitelist_config" "this" {
+  for_each     = { for file in var.malicious_file_whitelist_config : file.name => file }
+  operator     = each.value.operator
+  field        = each.value.field
+  target_value = each.value.target_value
+  target_type  = each.value.target_type
+  event_name   = each.value.name
+  source       = each.value.source
+  field_value  = each.value.field_value
+}
+
+resource "alicloud_threat_detection_oss_scan_config" "this" {
+  for_each             = { for scan in var.oss_scan_config : scan.name => scan }
+  bucket_name_list     = each.value.bucket_name_list
+  enable               = each.value.enable
+  end_time             = each.value.end_time
+  key_suffix_list      = each.value.key_suffix_list
+  scan_day_list        = each.value.scan_day_list
+  start_time           = each.value.start_time
+  key_prefix_list      = each.value.key_prefix_list
+  all_key_prefix       = each.value.all_key_prefix
+  oss_scan_config_name = each.value.name
+}
+
+resource "alicloud_threat_detection_sas_trail" "this" {
+  count = var.sas_trail ? 1 : 0
+}

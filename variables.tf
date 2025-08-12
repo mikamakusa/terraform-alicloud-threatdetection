@@ -253,4 +253,79 @@ variable "instances" {
     condition     = alltrue([for instance in var.instances : true if instance.rasp_count >= 1 && instance.rasp_count <= 100000000])
     error_message = "Valid values is between 1 & 100000000."
   }
+
+  validation {
+    condition     = alltrue([for instance in var.instances : true if instance.vul_count >= 20 && instance.vul_count <= 100000000])
+    error_message = "Valid values is between 20 & 100000000."
+  }
+
+  validation {
+    condition     = alltrue([for instance in var.instances : true if contains(["0", "1"], instance.vul_switch)])
+    error_message = "Valid values : 0 or 1."
+  }
+
+  validation {
+    condition     = alltrue([for instance in var.instances : true if contains(["0", "1"], instance.threat_analysis_switch)])
+    error_message = "Valid values : 0 or 1."
+  }
+
+  validation {
+    condition     = alltrue([for instance in var.instances : true if contains(["0", "1"], instance.threat_analysis_switch)])
+    error_message = "Valid values : 0 or 1."
+  }
+
+  validation {
+    condition     = alltrue([for instance in var.instances : true if instance.threat_analysis_sls_storage >= 0 && instance.threat_analysis_sls_storage <= 9999999999])
+    error_message = "Valid values is between 0 or 9999999999."
+  }
+
+  validation {
+    condition     = alltrue([for instance in var.instances : true if instance.threat_analysis_flow >= 0 && instance.threat_analysis_flow <= 9999999999])
+    error_message = "Valid values is between 0 or 9999999999."
+  }
+
+  validation {
+    condition     = alltrue([for instance in var.instances : true if instance.threat_analysis >= 0 && instance.threat_analysis <= 9999999999])
+    error_message = "Valid values is between 0 or 9999999999."
+  }
+}
+
+/*variable "log_meta" {
+  type = object({
+    status        = string
+    log_meta_name = string
+  })
+  default = null
+}*/
+
+variable "malicious_file_whitelist_config" {
+  type = list(object({
+    operator     = optional(string)
+    field        = optional(string)
+    target_value = optional(string)
+    target_type  = optional(string)
+    name         = optional(string)
+    source       = optional(string)
+    field_value  = optional(string)
+  }))
+  default = []
+}
+
+variable "oss_scan_config" {
+  type = list(object({
+    bucket_name_list = set(string)
+    enable           = number
+    end_time         = string
+    key_suffix_list  = set(string)
+    scan_day_list    = set(string)
+    start_time       = string
+    key_prefix_list  = optional(set(string))
+    all_key_prefix   = optional(bool)
+    name             = optional(string)
+  }))
+}
+
+variable "sas_trail" {
+  type    = bool
+  default = false
 }

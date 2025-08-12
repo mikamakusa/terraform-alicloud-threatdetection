@@ -112,3 +112,28 @@ output "instances" {
     }
   }
 }
+
+/*output "log_meta" {
+  value = {
+    for a in threat_detection_log_meta.this : a => {
+      id = a.id
+    }
+  }
+}*/
+
+output "malicious_file" {
+  value = {
+    for a in alicloud_threat_detection_malicious_file_whitelist_config.this : a => {
+      id          = a.id
+      create_time = a.create_time
+    }
+  }
+}
+
+output "oss_scan_config" {
+  value = {
+    for a in alicloud_threat_detection_oss_scan_config.this : a => {
+      id = a.id
+    }
+  }
+}
