@@ -14,6 +14,14 @@
 
 No modules.
 
+## Usage
+
+- [anti_brute_force_rule](examples/anti_brute_force_rule/main.tf)
+- [asset_bind](examples/asset_bind/main.tf)
+- [asset_selection_config](examples/asset_selection_config/main.tf)
+- [backup_policy](examples/backup_policy/main.tf)
+- [baseline_strategy](examples/baseline_strategy/main.tf)
+
 ## Resources
 
 | Name | Type |
@@ -34,6 +42,8 @@ No modules.
 | [alicloud_threat_detection_malicious_file_whitelist_config.this](https://registry.terraform.io/providers/aliyun/alicloud/latest/docs/resources/threat_detection_malicious_file_whitelist_config) | resource |
 | [alicloud_threat_detection_oss_scan_config.this](https://registry.terraform.io/providers/aliyun/alicloud/latest/docs/resources/threat_detection_oss_scan_config) | resource |
 | [alicloud_threat_detection_sas_trail.this](https://registry.terraform.io/providers/aliyun/alicloud/latest/docs/resources/threat_detection_sas_trail) | resource |
+| [alicloud_threat_detection_vul_whitelist.this](https://registry.terraform.io/providers/aliyun/alicloud/latest/docs/resources/threat_detection_vul_whitelist) | resource |
+| [alicloud_threat_detection_web_lock_config.this](https://registry.terraform.io/providers/aliyun/alicloud/latest/docs/resources/threat_detection_web_lock_config) | resource |
 | [alicloud_threat_detection_assets.this](https://registry.terraform.io/providers/aliyun/alicloud/latest/docs/data-sources/threat_detection_assets) | data source |
 | [alicloud_threat_detection_honeypot_images.this](https://registry.terraform.io/providers/aliyun/alicloud/latest/docs/data-sources/threat_detection_honeypot_images) | data source |
 
@@ -55,8 +65,10 @@ No modules.
 | <a name="input_image_event_operation"></a> [image\_event\_operation](#input\_image\_event\_operation) | n/a | <pre>list(object({<br/>    conditions     = string<br/>    event_key      = optional(string)<br/>    name           = optional(string)<br/>    event_type     = string<br/>    operation_code = string<br/>    scenarios      = optional(string)<br/>  }))</pre> | `[]` | no |
 | <a name="input_instances"></a> [instances](#input\_instances) | n/a | <pre>list(object({<br/>    payment_type                = string<br/>    version_code                = string<br/>    buy_number                  = optional(string)<br/>    container_image_scan_new    = optional(string)<br/>    honeypot                    = optional(string)<br/>    honeypot_switch             = optional(string)<br/>    modify_type                 = optional(string)<br/>    period                      = optional(number)<br/>    rasp_count                  = optional(string)<br/>    renew_period                = optional(number)<br/>    renewal_period_unit         = optional(string)<br/>    renewal_status              = optional(string)<br/>    sas_anti_ransomware         = optional(string)<br/>    sas_cspm                    = optional(string)<br/>    sas_cspm_switch             = optional(string)<br/>    sas_sc                      = optional(bool)<br/>    sas_sdk                     = optional(string)<br/>    sas_sdk_switch              = optional(string)<br/>    sas_sls_storage             = optional(string)<br/>    sas_webguard_boolean        = optional(string)<br/>    sas_webguard_order_num      = optional(string)<br/>    threat_analysis             = optional(string)<br/>    threat_analysis_flow        = optional(string)<br/>    threat_analysis_sls_storage = optional(string)<br/>    threat_analysis_switch      = optional(string)<br/>    threat_analysis_switch1     = optional(string)<br/>    v_core                      = optional(string)<br/>    vul_count                   = optional(string)<br/>    vul_switch                  = optional(string)<br/>  }))</pre> | `[]` | no |
 | <a name="input_malicious_file_whitelist_config"></a> [malicious\_file\_whitelist\_config](#input\_malicious\_file\_whitelist\_config) | n/a | <pre>list(object({<br/>    operator     = optional(string)<br/>    field        = optional(string)<br/>    target_value = optional(string)<br/>    target_type  = optional(string)<br/>    name         = optional(string)<br/>    source       = optional(string)<br/>    field_value  = optional(string)<br/>  }))</pre> | `[]` | no |
-| <a name="input_oss_scan_config"></a> [oss\_scan\_config](#input\_oss\_scan\_config) | n/a | <pre>list(object({<br/>    bucket_name_list = set(string)<br/>    enable           = number<br/>    end_time         = string<br/>    key_suffix_list  = set(string)<br/>    scan_day_list    = set(string)<br/>    start_time       = string<br/>    key_prefix_list  = optional(set(string))<br/>    all_key_prefix   = optional(bool)<br/>    name             = optional(string)<br/>  }))</pre> | n/a | yes |
+| <a name="input_oss_scan_config"></a> [oss\_scan\_config](#input\_oss\_scan\_config) | n/a | <pre>list(object({<br/>    bucket_name_list = set(string)<br/>    enable           = number<br/>    end_time         = string<br/>    key_suffix_list  = set(string)<br/>    scan_day_list    = set(string)<br/>    start_time       = string<br/>    key_prefix_list  = optional(set(string))<br/>    all_key_prefix   = optional(bool)<br/>    name             = optional(string)<br/>  }))</pre> | `[]` | no |
 | <a name="input_sas_trail"></a> [sas\_trail](#input\_sas\_trail) | n/a | `bool` | `false` | no |
+| <a name="input_vul_whitelist"></a> [vul\_whitelist](#input\_vul\_whitelist) | n/a | <pre>list(object({<br/>    whitelist   = string<br/>    target_info = optional(string)<br/>    reason      = optional(string)<br/>  }))</pre> | `[]` | no |
+| <a name="input_web_lock_config"></a> [web\_lock\_config](#input\_web\_lock\_config) | n/a | <pre>list(object({<br/>    defence_mode        = string<br/>    dir                 = string<br/>    local_backup_dir    = string<br/>    mode                = string<br/>    exclusive_dir       = optional(string)<br/>    exclusive_file      = optional(string)<br/>    exclusive_file_type = optional(string)<br/>  }))</pre> | `[]` | no |
 
 ## Outputs
 
@@ -77,3 +89,5 @@ No modules.
 | <a name="output_instances"></a> [instances](#output\_instances) | n/a |
 | <a name="output_malicious_file"></a> [malicious\_file](#output\_malicious\_file) | n/a |
 | <a name="output_oss_scan_config"></a> [oss\_scan\_config](#output\_oss\_scan\_config) | n/a |
+| <a name="output_vul_whitelist"></a> [vul\_whitelist](#output\_vul\_whitelist) | n/a |
+| <a name="output_web_lock_config"></a> [web\_lock\_config](#output\_web\_lock\_config) | n/a |

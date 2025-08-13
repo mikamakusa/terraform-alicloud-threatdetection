@@ -181,3 +181,22 @@ resource "alicloud_threat_detection_oss_scan_config" "this" {
 resource "alicloud_threat_detection_sas_trail" "this" {
   count = var.sas_trail ? 1 : 0
 }
+
+resource "alicloud_threat_detection_vul_whitelist" "this" {
+  for_each    = { for vul in var.vul_whitelist : vul.whitelist => vul }
+  whitelist   = each.value.whitelist
+  target_info = each.value.target_info
+  reason      = each.value.reason
+}
+
+resource "alicloud_threat_detection_web_lock_config" "this" {
+  for_each            = { for config in var.web_lock_config : config.mode => config }
+  defence_mode        = each.value.defence_mode
+  dir                 = each.value.dir
+  local_backup_dir    = each.value.local_backup_dir
+  mode                = each.value.mode
+  uuid                = data.alicloud_threat_detection_assets.this.ids.0
+  exclusive_dir       = each.value.exclusive_dir
+  exclusive_file      = each.value.exclusive_file
+  exclusive_file_type = each.value.exclusive_file_type
+}

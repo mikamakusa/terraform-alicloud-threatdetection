@@ -323,9 +323,32 @@ variable "oss_scan_config" {
     all_key_prefix   = optional(bool)
     name             = optional(string)
   }))
+  default = []
 }
 
 variable "sas_trail" {
   type    = bool
   default = false
+}
+
+variable "vul_whitelist" {
+  type = list(object({
+    whitelist   = string
+    target_info = optional(string)
+    reason      = optional(string)
+  }))
+  default = []
+}
+
+variable "web_lock_config" {
+  type = list(object({
+    defence_mode        = string
+    dir                 = string
+    local_backup_dir    = string
+    mode                = string
+    exclusive_dir       = optional(string)
+    exclusive_file      = optional(string)
+    exclusive_file_type = optional(string)
+  }))
+  default = []
 }

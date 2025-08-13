@@ -137,3 +137,23 @@ output "oss_scan_config" {
     }
   }
 }
+
+output "vul_whitelist" {
+  value = {
+    for a in alicloud_threat_detection_vul_whitelist.this : a => {
+      id = a.id
+    }
+  }
+}
+
+output "web_lock_config" {
+  value = {
+    for a in alicloud_threat_detection_web_lock_config.this : a => {
+      id                  = a.id
+      exclusive_dir       = a.exclusive_dir
+      exclusive_file      = a.exclusive_file
+      exclusive_file_type = a.exclusive_file_type
+      local_backup_dir    = a.local_backup_dir
+    }
+  }
+}
